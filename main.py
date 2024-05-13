@@ -45,13 +45,11 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
         print("Operação falhou! Número de saques excedido.")
     elif valor > 0:
         saldo -= valor
-        extrato += f"Saque:\t\tR$ {valor:.2f}\n"
         numero_saques += 1          
+        extrato += f"Saque:\t\tR$ {valor:.2f}\n"
     else:
         print("Operação falhou! O valor informado é inválido.")
         print("\n=============== Banco Universal ===============\n")
-        print(f"\n=============== Banco Universal ===============\n")
-
 
 
     return saldo, extrato
