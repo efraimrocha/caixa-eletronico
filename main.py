@@ -50,14 +50,35 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     else:
         print("Operação falhou! O valor informado é inválido.")
         print("\n=============== Banco Universal ===============\n")
-
-
     return saldo, extrato
             
 def exibir_extrato(saldo, /, *, extrato):
     print("\n=============== EXTRATO ===============")
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"\nSaldo atual: R$ {saldo:.2f}")
+
+def cirar_usuario(usuarios):
+    
+    cpf = input("Informe o CPF (somente números): ")
+    usuario = filtrar_usuario(cpf, usuarios)
+    
+    # Verifica pelo CPF se o usuário já existe cadastrado
+    if usuario:
+        print("Usuário já existente com esse CPF!")
+        return
+
+    nome = input("Informe o nome completo: ")
+    data_nascimento = input("Informe a data de nascimento (dd-mm-aaa): ")
+    endereco = input("Irforme o endereço (logradouro, nro - bairro - cidade/sigle estado): ")
+
+    usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco })
+    
+    print("\tUsuário criado com sucesso!")
+    
+def filtrar_usuario(cpf, usuarios):
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
+
 
 def main():
         
@@ -67,7 +88,7 @@ def main():
     limite = 500
     extrato = ""
     numero_saques = 0
-    usiarios = []
+    usuarios = []
     contas = []
 
 
@@ -94,6 +115,9 @@ def main():
 
         elif opcao == "e":
             exibir_extrato(saldo, extrato=extrato)
+            
+        elif opcao == "nu":
+            cirar_usuario(usuarios)
             
         elif opcao == "q":
             break
