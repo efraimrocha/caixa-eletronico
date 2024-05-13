@@ -79,6 +79,16 @@ def filtrar_usuario(cpf, usuarios):
     usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
     return usuarios_filtrados[0] if usuarios_filtrados else None
 
+def criar_conta(agencia, numero_conta, usuarios):
+    cpf = input("Informe o CPF do usuário: ")
+    usuario = filtrar_usuario(cpf, usuarios)
+    
+    if usuario:
+        print("Conta criada com sucesso! ")
+        return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
+    
+    print("Usuário não encontrado, operação encerrada!")
+
 
 def main():
         
@@ -119,6 +129,13 @@ def main():
         elif opcao == "nu":
             cirar_usuario(usuarios)
             
+        elif opcao == "nc":
+            nemero_conta = len(contas) + 1
+            conta = criar_conta(AGENCIA, nemero_conta, usuarios)
+            
+            if conta:
+                contas.append(conta)
+                
         elif opcao == "q":
             break
         else:
