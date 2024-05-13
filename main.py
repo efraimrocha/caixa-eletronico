@@ -1,4 +1,11 @@
 import textwrap
+#from datetime import datetime
+
+
+#def data_atual():
+#   data_e_hora_atuais = datetime.now()
+#    data_e_hora_em_texto = data_e_hora_atuais.strftime(‘%d/%m/%Y’)
+#print(data_e_hora_em_texto)
 
 def menu():
     menu = """
@@ -15,11 +22,10 @@ def menu():
     => """
     return input(textwrap.dedent(menu))
 
-
-def depositar(saldo, valor, extrato):
+def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
-        extrato += f"Depósito: R$ {valor:.2f}\n"
+        extrato += f"Depósito:\tR$ {valor:.2f}\n"
         print("\nOperação realizado com sucesso!")
     else:
         print("Operação falhou! O valor informado é inválido.")
@@ -30,6 +36,7 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     excedeu_saldo = valor > saldo
     excedeu_limite = valor > limite
     excedeu_saques = numero_saques >= limite_saques
+    print("\n=============== Banco Universal ===============\n")
     if excedeu_saldo:
         print("Operação falhou! Você não tem saldo suficiente.")
     elif excedeu_limite:
@@ -38,12 +45,21 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
         print("Operação falhou! Número de saques excedido.")
     elif valor > 0:
         saldo -= valor
-        extrato += f"Saque: R$ {valor:.2f}\n"
+        extrato += f"Saque:\t\tR$ {valor:.2f}\n"
         numero_saques += 1          
     else:
         print("Operação falhou! O valor informado é inválido.")
+        print("\n=============== Banco Universal ===============\n")
+        print(f"\n=============== Banco Universal ===============\n")
 
-    return saldo, valor, extrato, limite, numero_saques, limite_saques
+
+
+    return saldo, extrato
+            
+def exibir_extrato(saldo, /, *, extrato):
+    print("\n=============== EXTRATO ===============")
+    print("Não foram realizadas movimentações." if not extrato else extrato)
+    print(f"\nSaldo atual: R$ {saldo:.2f}")
 
 def main():
         
@@ -57,16 +73,15 @@ def main():
     contas = []
 
 
-
     while True:
-        
         opcao = menu()
         
         if opcao == "d":     
             valor = float(input("informe o valor do depósito: "))
             
             saldo, valor = depositar(saldo, valor, extrato)
-
+            extrato += f"{valor}"
+            
         elif opcao == "s":
             valor = float(input("informe o valor do saque: "))
 
@@ -80,15 +95,13 @@ def main():
             )
 
         elif opcao == "e":
-            print("\n=============== EXTRATO ===============")
-            print("Não foram realizadas movimentações." if not extrato else extrato)
-            print(f"\nSaldo: R$ {saldo:.2f}")
-            print("=======================================")
-   
+            exibir_extrato(saldo, extrato=extrato)
+            
         elif opcao == "q":
             break
         else:
             print("Operação inválida, por favor selecione novamente a peração desejada. ")
-            
 
+    print("=======================================")
+   
 main()
