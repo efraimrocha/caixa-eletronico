@@ -89,7 +89,16 @@ def criar_conta(agencia, numero_conta, usuarios):
     
     print("Usuário não encontrado, operação encerrada!")
 
-
+def listar_contas(contas):
+    for conta in contas:
+        linha = f"""\
+            Agência:\t{conta['agencia']}
+            Nro. Conta:\t{conta["numero_conta"]}
+            Titular:\t{conta["usuario"]["nome"]}
+        """
+        print("=" * 100)
+        print(textwrap.dedent(linha))
+        
 def main():
         
     LIMITE_SAQUES = 3
@@ -100,6 +109,7 @@ def main():
     numero_saques = 0
     usuarios = []
     contas = []
+    nemero_conta = 1
 
 
     while True:
@@ -130,12 +140,16 @@ def main():
             cirar_usuario(usuarios)
             
         elif opcao == "nc":
-            nemero_conta = len(contas) + 1
+            #nemero_conta = len(contas) + 1
             conta = criar_conta(AGENCIA, nemero_conta, usuarios)
             
             if conta:
                 contas.append(conta)
-                
+                nemero_conta += 1
+             
+        elif opcao == "lc":
+            listar_contas(contas)
+           
         elif opcao == "q":
             break
         else:
