@@ -20,8 +20,12 @@ Para usar este programa, você precisa ter Python instalado em seu computador. D
 
 ```bash
 python main.py
+```
 
 Depois de iniciar o programa, você verá um menu com várias opções. Você pode escolher uma opção digitando a letra correspondente e pressionando Enter.
+
+![image](https://github.com/efraimrocha/caixa-eletronico/assets/67542881/f71828d3-0b38-4fba-aa3b-4c64123c32b7)
+
 
 Contribuições
 Contribuições para este projeto são bem-vindas. Se você encontrar um bug ou gostaria de adicionar uma nova funcionalidade, sinta-se à vontade para criar um problema ou enviar um pull request.
