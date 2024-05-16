@@ -1,31 +1,31 @@
-# caixa-eletronico
-Repositório para desafio de código do bootcamp Python AI backend VIVO.
+# Banco Universal
 
-# Sistema Bancário Simples
-
-Este é um programa simples de simulação de operações bancárias. O programa permite que o usuário realize depósitos, saques, veja o extrato e saia do programa.
+Este é um programa de console simples escrito em Python que simula algumas operações bancárias básicas.
 
 ## Funcionalidades
 
-O programa possui as seguintes funcionalidades:
+O programa permite ao usuário realizar as seguintes operações:
 
-1. **Depositar [d]**: Esta opção permite ao usuário fazer um depósito. O usuário deve informar o valor do depósito. Se o valor for maior que 0, o valor é adicionado ao saldo e registrado no extrato.
-
-2. **Sacar [s]**: Esta opção permite ao usuário fazer um saque. O usuário deve informar o valor do saque. Existem algumas restrições para esta operação:
-    - O valor do saque não pode exceder o saldo disponível.
-    - O valor do saque não pode exceder o limite de saque definido (R$ 500).
-    - O número de saques não pode exceder o limite de saques definido (3 saques).
-    Se o valor do saque for maior que 0 e nenhuma das restrições for violada, o valor é subtraído do saldo e registrado no extrato.
-
-3. **Extrato [e]**: Esta opção permite ao usuário ver o extrato das operações realizadas. O extrato mostra todas as operações de depósito e saque realizadas, bem como o saldo atual.
-
-4. **Sair [q]**: Esta opção permite ao usuário sair do programa.
+- **Depositar** dinheiro em uma conta
+- **Sacar** dinheiro de uma conta
+- Ver o **Extrato** da conta
+- Criar uma **Nova conta**
+- **Listar contas** existentes
+- Adicionar um **Novo usuário**
+- **Sair** do programa
 
 ## Como usar
 
-Para usar o programa, basta executá-lo e seguir as instruções exibidas no console. O usuário deve escolher uma das opções do menu (d, s, e, q) e seguir as instruções correspondentes.
+Para usar este programa, você precisa ter Python instalado em seu computador. Depois de ter Python instalado, você pode executar o programa usando o seguinte comando no terminal:
 
-## Notas
+```bash
+python main.py
 
-Este programa é uma simulação simples e não deve ser usado para operações bancárias reais.
+Depois de iniciar o programa, você verá um menu com várias opções. Você pode escolher uma opção digitando a letra correspondente e pressionando Enter.
+
+Contribuições
+Contribuições para este projeto são bem-vindas. Se você encontrar um bug ou gostaria de adicionar uma nova funcionalidade, sinta-se à vontade para criar um problema ou enviar um pull request.
+
+Licença
+Este projeto está licenciado sob a licença MIT.
 
