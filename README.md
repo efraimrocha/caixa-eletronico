@@ -1,6 +1,6 @@
 # Banco Universal
 
-Este é um programa de console simples escrito em Python que simula algumas operações bancárias básicas.
+Este é um programa de console simples escrito em Python que simula algumas operações bancárias básicas. Este projeto é um desafio de código proposto pela Digital Innovation One (DIO) no Bootcamp Python AI Backend Developer.
 
 ## Funcionalidades
 
@@ -27,9 +27,9 @@ Depois de iniciar o programa, você verá um menu com várias opções. Você po
 ![image](https://github.com/efraimrocha/caixa-eletronico/assets/67542881/f71828d3-0b38-4fba-aa3b-4c64123c32b7)
 
 
-Contribuições
+## Contribuições
 Contribuições para este projeto são bem-vindas. Se você encontrar um bug ou gostaria de adicionar uma nova funcionalidade, sinta-se à vontade para criar um problema ou enviar um pull request.
 
-Licença
+## Licença
 Este projeto está licenciado sob a licença MIT.
 
