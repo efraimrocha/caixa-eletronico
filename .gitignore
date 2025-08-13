@@ -1,0 +1,78 @@
+# Arquivo .gitignore para projeto bancário Python
+
+# Ambiente Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Ambiente virtual
+venv/
+ENV/
+env/
+.venv/
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Banco de dados
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Testes e cobertura
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+
+# Documentação
+docs/_build/
+
+# Arquivos temporários
+*.tmp
+*.bak
+*~
+
+# Configurações específicas do projeto
+/config.py
+/secrets.py
+/credentials.ini
+/settings.local.py
+
+# Arquivos de desenvolvimento
+!.env.example
+.env

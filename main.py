@@ -1,90 +1,94 @@
-from func import *
+from banco.core.banco import Banco
+from banco.core.cliente import Cliente
+from banco.core.transacao import Deposito, Saque
+from banco.utils.log import Logger
 
 def main():
-    # Constantes do sistema
-    LIMITE_SAQUES = 3
-    AGENCIA = "0001"
-    
-    # Variáveis de estado
-    saldo = 0
-    limite = 500
-    extrato = ""
-    numero_saques = 0
-    usuarios = []
-    contas = []
-    numero_conta = 1
+    banco = Banco()
+    logger = Logger()
 
     while True:
+        print("\n=============== BANCO PROFISSIONAL ===============")
+        print("1. Cadastrar Cliente")
+        print("2. Criar Conta")
+        print("3. Depositar")
+        print("4. Sacar")
+        print("5. Extrato")
+        print("6. Sair")
+        opcao = input("Opção: ")
+
         try:
-            opcao = menu()
+            if opcao == "1":
+                nome = input("Nome: ").strip()
+                cpf = input("CPF (apenas números): ").strip()
+                data_nasc = input("Data Nasc. (dd/mm/aaaa): ").strip()
+                endereco = input("Endereço: ").strip()
+                
+                if not nome or not cpf.isdigit() or len(cpf) != 11:
+                    logger.registrar("ERRO_VALIDACAO", {"Tipo": "CPF inválido"})
+                    print("❌ Dados inválidos!")
+                    continue
+                    
+                cliente = Cliente(nome, cpf, data_nasc, endereco)
+                if banco.cadastrar_cliente(cliente):
+                    print("✅ Cliente cadastrado!")
 
-            # Operação de Depósito
-            if opcao == "d":
-                try:
-                    valor = float(input("\nInforme o valor do depósito: "))
-                    saldo, extrato = depositar(saldo, valor, extrato)
-                except ValueError:
-                    print("\nErro: Valor inválido. Digite um número.")
-
-            # Operação de Saque
-            elif opcao == "s":
-                try:
-                    valor = float(input("\nInforme o valor do saque: "))
-                    saldo, extrato, numero_saques = sacar(
-                        saldo=saldo,
-                        valor=valor,
-                        extrato=extrato,
-                        limite=limite,
-                        numero_saques=numero_saques,
-                        limite_saques=LIMITE_SAQUES,
-                    )
-                except ValueError:
-                    print("\nErro: Valor inválido. Digite um número.")
-
-            # Visualização de Extrato
-            elif opcao == "e":
-                exibir_extrato(saldo, extrato=extrato)
-
-            # Cadastro de Novo Usuário
-            elif opcao == "nu":
-                criar_usuario(usuarios)
-
-            # Criação de Nova Conta
-            elif opcao == "nc":
-                conta = criar_conta(AGENCIA, numero_conta, usuarios)
+            elif opcao == "2":
+                cpf = input("CPF do Cliente: ").strip()
+                if not cpf.isdigit() or len(cpf) != 11:
+                    logger.registrar("ERRO_VALIDACAO", {"Tipo": "CPF inválido"})
+                    print("❌ CPF inválido!")
+                    continue
+                    
+                conta = banco.criar_conta("0001", cpf)
                 if conta:
-                    contas.append(conta)
-                    numero_conta += 1
+                    print(f"✅ Conta {conta.numero} criada!")
 
-            # Listagem de Contas
-            elif opcao == "lc":
-                listar_contas(contas)
+            elif opcao == "3":
+                try:
+                    agencia = input("Agência: ").strip()
+                    numero = int(input("Número: "))
+                    valor = float(input("Valor: "))
+                    conta = banco.buscar_conta(agencia, numero)
+                    print(Deposito(valor).registrar(conta))
+                except ValueError as e:
+                    print(f"❌ {e}")
 
-            # Relatórios
-            elif opcao == "rl":
-                mostrar_relatorios(usuarios, contas)
+            elif opcao == "4":
+                try:
+                    agencia = input("Agência: ").strip()
+                    numero = int(input("Número: "))
+                    valor = float(input("Valor: "))
+                    conta = banco.buscar_conta(agencia, numero)
+                    print(Saque(valor).registrar(conta))
+                except ValueError as e:
+                    print(f"❌ {e}")
 
-            # Saída do Sistema
-            elif opcao == "q":
-                data_hora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-                mensagem_saida = f"""
-                ==============================================
-                         {data_hora}
-                === OBRIGADO POR USAR NOSSO SISTEMA! ===
-                """
-                print(textwrap.dedent(mensagem_saida))
+            elif opcao == "5":
+                try:
+                    agencia = input("Agência: ").strip()
+                    numero = int(input("Número: "))
+                    conta = banco.buscar_conta(agencia, numero)
+                    print(conta.get_extrato())
+                except ValueError as e:
+                    print(f"❌ {e}")
+
+            elif opcao == "6":
+                logger.registrar("SISTEMA", {"Status": "Encerrado"})
+                print("Saindo...")
                 break
 
-            # Opção inválida
             else:
-                print("\nOperação inválida! Por favor selecione uma opção válida.")
+                logger.registrar("ERRO_OPCAO", {"Opção": opcao})
+                print("❌ Opção inválida!")
 
         except KeyboardInterrupt:
-            print("\n\nOperação cancelada pelo usuário.")
+            logger.registrar("SISTEMA", {"Status": "Interrompido pelo usuário"})
+            print("\nOperação cancelada pelo usuário")
             break
         except Exception as e:
-            print(f"\nOcorreu um erro inesperado: {e}")
-            print("Por favor, tente novamente.")
+            logger.registrar("ERRO_INESPERADO", {"Detalhes": str(e)})
+            print(f"❌ Ocorreu um erro: {e}")
 
 if __name__ == "__main__":
     main()
