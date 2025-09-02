@@ -201,13 +201,14 @@ Projeto sob licença MIT. Veja o arquivo LICENSE.
 
 **Efraim Rocha**  
 GitHub: [@efraimrocha](https://github.com/efraimrocha)  
-Email: efraimrocha@gmail.com
+Email: efraimrocha86@gmail.com
 
 ---
 
 ## 🙏 Agradecimentos
 
-- Equipe de desenvolvimento
+- Digital Inovation One
+- Suzano
 - Comunidade Python
 - Contribuidores e testadores
 
