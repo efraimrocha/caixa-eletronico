@@ -1,40 +1,39 @@
-import logging
+import json
 from datetime import datetime
 from pathlib import Path
 
 class Logger:
-    _instance = None
+    def __init__(self, arquivo_log: str = 'sistema.log'):
+        self.arquivo_log = arquivo_log
+        self._criar_diretorio_log()
 
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance._inicializado = False
-        return cls._instance
+    def _criar_diretorio_log(self):
+        """Cria o diretório de logs se não existir"""
+        Path(self.arquivo_log).parent.mkdir(parents=True, exist_ok=True)
 
-    def __init__(self):
-        if not hasattr(self, '_inicializado'):
-            self._inicializado = False
-        if not self._inicializado:
-            self.log_dir = Path(__file__).parent.parent / "logs"
-            self.log_dir.mkdir(exist_ok=True)
-            
-            logging.basicConfig(
-                filename=self.log_dir / "banco.log",
-                level=logging.INFO,
-                format='%(asctime)s - %(levelname)s - %(message)s',
-                datefmt='%d/%m/%Y %H:%M:%S',
-                encoding='utf-8'
-            )
-            self.logger = logging.getLogger("banco")
-            self._inicializado = True
-
-    def registrar(self, operacao: str, detalhes: dict):
-        mensagem = f"{operacao.upper()}"
-        for chave, valor in detalhes.items():
-            mensagem += f" | {chave}: {valor}"
+    def registrar(self, evento: str, dados: dict):
+        """Registra um evento no log"""
+        log_entry = {
+            'timestamp': datetime.now().isoformat(),
+            'evento': evento,
+            'dados': dados
+        }
         
-        self.logger.info(mensagem)
-        self._log_console(mensagem)
+        try:
+            with open(self.arquivo_log, 'a', encoding='utf-8') as f:
+                f.write(json.dumps(log_entry, ensure_ascii=False) + '\n')
+        except Exception as e:
+            print(f"Erro ao escrever no log: {e}")
 
-    def _log_console(self, mensagem: str):
-        print(f"[SISTEMA] {datetime.now().strftime('%d/%m/%Y %H:%M:%S')} - {mensagem}")
+    def ler_logs(self) -> list:
+        """Lê todos os logs do arquivo"""
+        logs = []
+        try:
+            if Path(self.arquivo_log).exists():
+                with open(self.arquivo_log, 'r', encoding='utf-8') as f:
+                    for linha in f:
+                        logs.append(json.loads(linha.strip()))
+        except Exception as e:
+            print(f"Erro ao ler logs: {e}")
+        
+        return logs
